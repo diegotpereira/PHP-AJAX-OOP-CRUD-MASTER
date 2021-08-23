@@ -7,8 +7,8 @@ $(document).ready(function() {
         // ler o registro do produto com base em determinado ID
         $.getJSON("http://localhost:8000/api/produto/ler_um.php?id=" + id, function(data) {
 
-        // iniciar html
-        var ler_one_produto_html =`
+            // iniciar html
+            var ler_one_produto_html = `
             <!-- quando clicado, mostrará a lista de produtos -->
             <div id='ler-produtos' class='btn btn-primary pull-right m-b-15px ler-produtos-button'>
                 <span class='glyphicon glyphicon-list'></span> Seus Produtos
