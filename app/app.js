@@ -9,7 +9,7 @@ $(document).ready(function() {
     var app_html = `
         <div class='container'>
             <div class='page-header'>
-                <h1 id='page-title'>Ler Produtos</h1>
+                <h1 id='page-title'>Seus Produtos</h1>
             </div>
 
             

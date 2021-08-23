@@ -1,6 +1,9 @@
 $(document).ready(function() {
 
     // mostrar lista de produtos no primeiro carregamento
+    // mostrarProdutos();
+
+    // mostrar lista de produtos no primeiro carregamento
     mostrarProdutosPrimeiraPagina();
 
     $(document).on('click', '.ler-produtos-button', function() {
@@ -27,7 +30,7 @@ function mostrarProdutos(json_url)
         lerProdutosTemplate(data, "");
 
         // mudar o título da página
-        changePageTitle("Ler Produtos");
+        changePageTitle("Seus Produtos");
     });
 }
 
