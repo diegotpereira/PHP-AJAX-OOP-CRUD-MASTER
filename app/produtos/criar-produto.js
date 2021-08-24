@@ -1,17 +1,22 @@
 $(document).ready(function() {
 
-    // show html form when 'create product' button was clicked
+    //  mostrar o formulário html quando o botão 'criar produto' for clicado
     $(document).on('click', '.criar-produto-button', function() {
-        // categories api call will be here
-        var categorias_opcao_html = `<select name='categoria_id' class='form-control'>`;
+
+        // carregar lista de categorias
         getJSON("http://localhost:8000/api/categoria/ler.php", function(data) {
-            console.log(data);
+            //construir categorias opção html
+            // percorrer a lista de dados retornada
+            var categorias_opcao_html = `<select name='categoria_id' class='form-control'>`;
+            // a opção de pré-seleção se o id da categoria é o mesmo
             $.each(data.registros, function(key, val) {
                 categorias_opcao_html +=
                     `<option value='` + val.id + `' selected>` + val.nome + `</option>`;
             });
             categorias_opcao_html += `</select>`;
 
+            // temos nosso formulário html aqui, onde as informações do produto serão inseridas
+            // usamos a propriedade html5 'required' para evitar campos vazios
             var criar_produto_html = `
         
             <!--botão ler produtos para mostrar a lista de produtos -->
@@ -21,7 +26,7 @@ $(document).ready(function() {
             <!-- criar formulário html do produto -->
             <form id='criar-produto-form' action='#' method='post border='0'>
                 <!-- criar formulário html do produto -->
-                <table class='table tabler-hover table-responsive table-bordered'>
+                <table class='table table-hover table-responsive table-bordered'>
                     <!-- campo nome -->
                     <tr>
                         <td>Nome</td>
@@ -41,20 +46,19 @@ $(document).ready(function() {
 
                     <!-- categorias 'selecionar' campo -->
                     <tr>
-                    <td>Categoria</td>
-                    <td>` + categorias_opcao_html + `</td>
+                        <td>Categoria</td>
+                        <td>` + categorias_opcao_html + `</td>
                     </tr>
                     
                     <!-- botão para enviar o formulário -->
                     <tr>
-                    <td></td>
-                    <td>
-                        <button type='submit' class='btn btn-primary'>
-                            <span class='glyphicon glyphicon-plus'></span> Salvar
-                        </button>
+                       <td></td>
+                       <td>
+                            <button type='submit' class='btn btn-primary'>
+                                <span class='glyphicon glyphicon-plus'></span> Salvar
+                            </button>
                         </td>
                     </tr>
-                </tr>
             </table>   
             </form>`;
 
@@ -63,9 +67,9 @@ $(document).ready(function() {
 
             // mudar titulo página
             changePageTitle("Novo Produto");
-            //será executado se criar formulário de produto foi enviado
-
         });
+
+        //será executado se criar formulário de produto foi enviado
         $(document).on('submit', '#criar-produto-form', function() {
             // obter dados do formulário
             var dados_formulario = JSON.stringify($(this).serializeObject());
@@ -89,8 +93,6 @@ $(document).ready(function() {
         });
 
         function getJSON(url, registros, callback) {
-
-
             return $.getJSON(url, registros, callback)
                 .fail(function(jqXMLHttpRequest, textStatus, errorThrown) {
                     console.dir(jqXMLHttpRequest);
