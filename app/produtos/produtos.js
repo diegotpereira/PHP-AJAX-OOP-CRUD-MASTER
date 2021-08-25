@@ -1,14 +1,13 @@
     // lista produtos html
-function lerProdutosTemplate(data, palavraChave)
-{
+    function lerProdutosTemplate(data, palavraChave) {
 
-    //
-    var ler_produtos_html=`
+        //
+        var ler_produtos_html = `
         <!-- formulario busca de produtos -->
         <form id='buscar-produto-form' action='#' method='post'>
             <div class='input-group pull-left w-30-pct'>
             
-                <input type='text' value='` + palavraChave + `' name='palavraChave' class='form-control produto-buscar-palavraChave' placeholder='Pesquisar Produtos...' />
+                <input type='text' value='` + palavraChave + `' name='palavraChave' class='form-control produto-buscar-palavraChave' placeholder='Buscar Produtos...' />
 
                 <span class='input-group-btn'>
                     <button type='submit' class='btn btn-default' type='button'>
@@ -33,7 +32,7 @@ function lerProdutosTemplate(data, palavraChave)
                 <th class='w-25-pct text-align-center'>Ação</th>
             </tr>`;
         // loop através de lista de dados retornados
-        $.each(data.registros, function (key, val) {
+        $.each(data.registros, function(key, val) {
             // criando nova linha de tabela por registro
             ler_produtos_html += `<tr>
                 <td>` + val.nome + `</td>
@@ -57,13 +56,36 @@ function lerProdutosTemplate(data, palavraChave)
                         <span class='glyphicon glyphicon-remove'></span> Excluir
                     </button>
                 </td>
-            </tr>`;            
+            </tr>`;
         });
 
         // end table
-        ler_produtos_html+=`</table>`;
+        ler_produtos_html += `</table>`;
+
+        // paginação
+        if (data.paging) {
+            ler_produtos_html += "<ul class='pagination pull-left margin-zero padding-bottom-2em'>";
+
+            // primeira página
+            if (data.paging.first != "") {
+                ler_produtos_html += "<li><a data-page='" + data.paging.first + "'>Primeira Página</a></li>";
+            }
+
+            // percorrer as páginas
+            $.each(data.paging.pages, function(key, val) {
+
+                var pagina_ativa = val.pagina_atual == "Sim" ? "class='active' " : "";
+                ler_produtos_html += "<li " + pagina_ativa + "><a data-page='" + val.url + "'>" + val.page + "</a></li>";
+            });
+
+            // ultima página
+            if (data.paging.last != "") {
+                ler_produtos_html += "<li><a data-page ='" + data.paging.last + "'> Ultima Página</a></li>";
+            }
+            ler_produtos_html += "</ul>";
+        }
 
         // injetar no 'conteúdo da página' do nosso aplicativo
         $("#page-content").html(ler_produtos_html);
 
-}
+    }

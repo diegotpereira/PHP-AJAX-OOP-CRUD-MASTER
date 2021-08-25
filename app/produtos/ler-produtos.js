@@ -1,15 +1,21 @@
 $(document).ready(function() {
 
     // mostrar lista de produtos no primeiro carregamento
-    // mostrarProdutos();
-
-    // mostrar lista de produtos no primeiro carregamento
     mostrarProdutosPrimeiraPagina();
 
     $(document).on('click', '.ler-produtos-button', function() {
         mostrarProdutosPrimeiraPagina();
     });
 
+    // when a 'page' button was clicked
+    $(document).on('click', '.pagination li', function() {
+
+        // obter url json
+        var json_url = $(this).find('a').attr('data-page');
+
+        // mostrar lista de produtos
+        mostrarProdutos(json_url);
+    });
 });
 
 
